@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#78f1d0"/><stop offset=".48" stop-color="#3489ff"/><stop offset="1" stop-color="#7043d8"/></linearGradient>
+  <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff1a4"/><stop offset="1" stop-color="#ffbd35"/></linearGradient>
+  <filter id="shadow" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#031335" flood-opacity=".4"/></filter>
+</defs>
+<rect x="5" y="5" width="182" height="182" rx="48" fill="#09265d" stroke="#b4d2ff" stroke-opacity=".55" stroke-width="5" filter="url(#shadow)"/>
+<rect x="17" y="17" width="158" height="158" rx="39" fill="url(#bg)"/>
+<path d="M18 61Q96 8 174 61V51Q96 2 18 51Z" fill="#fff" opacity=".25"/>
+<circle cx="144" cy="47" r="8" fill="#fff4bc"/>
+<text x="39" y="111" fill="#fff" font-size="70" font-weight="900" font-family="Arial,sans-serif">2</text>
+<text x="91" y="157" fill="url(#gold)" stroke="#173c7b" stroke-width="2" font-size="76" font-weight="900" font-family="Arial,sans-serif">3</text>
+</svg>
