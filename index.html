@@ -1,21 +1,84 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="/favicon.ico" />
-    <title>Pi harness</title>
-    <script>
-      (() => {
-        const stored = localStorage.getItem("theme");
-        const mode = stored || "light";
-        document.documentElement.setAttribute("data-mode", mode);
-        document.documentElement.style.colorScheme = mode;
-      })();
-    </script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/client.tsx"></script>
-  </body>
-</html>
+const HTML = `<!DOCTYPE html>
+<html lang="my">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Myanmar 2D</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:sans-serif; background:linear-gradient(180deg,#0a2463,#1e4bb5,#2563eb); color:#fff; min-height:100vh; padding-bottom:80px; }
+.header { display:flex; justify-content:space-between; align-items:center; padding:16px 20px; }
+.header h1 { font-size:1.4rem; }
+.status-badge { background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2); padding:6px 14px; border-radius:20px; font-size:.8rem; }
+.main-result { text-align:center; padding:20px; }
+.main-number { font-size:6rem; font-weight:800; }
+.updated-time { color:rgba(255,255,255,.6); font-size:.85rem; margin-top:10px; }
+.session-card { background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15); border-radius:20px; padding:18px; margin:14px 16px; }
+.session-header { display:flex; justify-content:space-between; margin-bottom:14px; padding-bottom:14px; border-bottom:1px solid rgba(255,255,255,.1); }
+.session-time { font-size:1.2rem; font-weight:700; }
+.session-tag { background:#fbbf24; color:#0a2463; padding:5px 14px; border-radius:20px; font-size:.75rem; font-weight:700; }
+.session-body { display:grid; grid-template-columns:1fr 1fr auto; gap:16px; }
+.session-col .label { font-size:.75rem; color:rgba(255,255,255,.45); }
+.session-col .value { font-size:1.2rem; font-weight:700; }
+.session-result .number { font-size:2.5rem; font-weight:800; color:#fbbf24; }
+.time-slots-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:14px 16px; }
+.time-card { background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15); border-radius:16px; padding:14px; }
+.time-card .time { font-size:1.1rem; font-weight:700; margin-bottom:10px; }
+.time-row { display:flex; justify-content:space-between; margin-bottom:6px; }
+.time-row .label { font-size:.75rem; color:rgba(255,255,255,.45); }
+.time-row .value { font-size:1.4rem; font-weight:700; }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>Myanmar 2D</h1>
+  <div class="status-badge">● CLOSED</div>
+</div>
+<div class="main-result">
+  <div class="main-number">90</div>
+  <div class="updated-time">✓ Updated 2026-11-05 04:30 PM</div>
+</div>
+<div class="session-card">
+  <div class="session-header">
+    <div class="session-time">☀️ 12:01 PM</div>
+    <div class="session-tag">MORNING</div>
+  </div>
+  <div class="session-body">
+    <div class="session-col"><div class="label">SET</div><div class="value">1,493.86</div></div>
+    <div class="session-col"><div class="label">VALUE</div><div class="value">49,875.74</div></div>
+    <div class="session-result"><div class="label">2D</div><div class="number">65</div></div>
+  </div>
+</div>
+<div class="session-card">
+  <div class="session-header">
+    <div class="session-time">🌙 4:30 PM</div>
+    <div class="session-tag">EVENING</div>
+  </div>
+  <div class="session-body">
+    <div class="session-col"><div class="label">SET</div><div class="value">1,497.99</div></div>
+    <div class="session-col"><div class="label">VALUE</div><div class="value">86,950.24</div></div>
+    <div class="session-result"><div class="label">2D</div><div class="number">90</div></div>
+  </div>
+</div>
+<div class="time-slots-row">
+  <div class="time-card">
+    <div class="time">9:30 AM</div>
+    <div class="time-row"><span class="label">MODERN</span><span class="value">31</span></div>
+    <div class="time-row"><span class="label">INTERNET</span><span class="value">36</span></div>
+  </div>
+  <div class="time-card">
+    <div class="time">2:00 PM</div>
+    <div class="time-row"><span class="label">MODERN</span><span class="value">29</span></div>
+    <div class="time-row"><span class="label">INTERNET</span><span class="value">39</span></div>
+  </div>
+</div>
+</body>
+</html>`;
+
+export default {
+  async fetch(request) {
+    return new Response(HTML, {
+      headers: { "Content-Type": "text/html; charset=utf-8" },
+    });
+  },
+};
