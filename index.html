@@ -3,74 +3,52 @@ const HTML = `<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Myanmar 2D</title>
+<meta name="theme-color" content="#101a2d">
+<meta name="description" content="မြန်မာ 2D ရလဒ်များကို ရှင်းလင်းလွယ်ကူစွာ ကြည့်ရှုနိုင်ရန်။">
+<title>Myanmar 2D — ရလဒ်များ</title>
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
-body { font-family:sans-serif; background:linear-gradient(180deg,#0a2463,#1e4bb5,#2563eb); color:#fff; min-height:100vh; padding-bottom:80px; }
-.header { display:flex; justify-content:space-between; align-items:center; padding:16px 20px; }
-.header h1 { font-size:1.4rem; }
-.status-badge { background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2); padding:6px 14px; border-radius:20px; font-size:.8rem; }
-.main-result { text-align:center; padding:20px; }
-.main-number { font-size:6rem; font-weight:800; }
-.updated-time { color:rgba(255,255,255,.6); font-size:.85rem; margin-top:10px; }
-.session-card { background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15); border-radius:20px; padding:18px; margin:14px 16px; }
-.session-header { display:flex; justify-content:space-between; margin-bottom:14px; padding-bottom:14px; border-bottom:1px solid rgba(255,255,255,.1); }
-.session-time { font-size:1.2rem; font-weight:700; }
-.session-tag { background:#fbbf24; color:#0a2463; padding:5px 14px; border-radius:20px; font-size:.75rem; font-weight:700; }
-.session-body { display:grid; grid-template-columns:1fr 1fr auto; gap:16px; }
-.session-col .label { font-size:.75rem; color:rgba(255,255,255,.45); }
-.session-col .value { font-size:1.2rem; font-weight:700; }
-.session-result .number { font-size:2.5rem; font-weight:800; color:#fbbf24; }
-.time-slots-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:14px 16px; }
-.time-card { background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15); border-radius:16px; padding:14px; }
-.time-card .time { font-size:1.1rem; font-weight:700; margin-bottom:10px; }
-.time-row { display:flex; justify-content:space-between; margin-bottom:6px; }
-.time-row .label { font-size:.75rem; color:rgba(255,255,255,.45); }
-.time-row .value { font-size:1.4rem; font-weight:700; }
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Noto+Sans+Myanmar:wght@400;500;600;700;800&display=swap');
+:root{color-scheme:dark;--bg:#0b1220;--surface:#121d30;--surface-2:#17243a;--line:rgba(255,255,255,.085);--text:#f4f7fb;--muted:#91a0b7;--mint:#74e0bd;--gold:#ffcf70;--blue:#8ba9ff;--radius:22px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;background:radial-gradient(ellipse at 82% 0%,rgba(55,105,155,.2),transparent 38%),var(--bg);color:var(--text);font-family:'DM Sans','Noto Sans Myanmar',sans-serif;padding:0 20px 36px}
+.shell{max-width:1000px;margin:0 auto}
+.topbar{height:82px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:12px}.brand-mark{width:42px;height:42px;border-radius:14px;background:linear-gradient(145deg,#8af0cf,#43b996);display:grid;place-items:center;color:#0c2430;font-size:17px;font-weight:800;box-shadow:0 8px 26px rgba(80,210,171,.2)}
+.brand-name{font-weight:800;font-size:1.04rem;letter-spacing:-.3px}.brand-sub{font-size:.72rem;color:var(--muted);margin-top:3px}
+.market-state{display:flex;align-items:center;gap:8px;color:#b9c5d5;font-size:.8rem;background:rgba(255,255,255,.045);border:1px solid var(--line);padding:9px 13px;border-radius:999px}.dot{width:7px;height:7px;border-radius:50%;background:#ffcb6b;box-shadow:0 0 12px rgba(255,203,107,.55)}
+main{padding-top:32px}.intro{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:20px}.eyebrow{font-size:.76rem;color:var(--mint);font-weight:700;letter-spacing:1.1px}.intro h1{font-size:clamp(1.35rem,4vw,1.85rem);margin-top:7px;letter-spacing:-.8px}.date-chip{color:#bac6d8;font-size:.8rem;border:1px solid var(--line);border-radius:12px;padding:10px 13px;white-space:nowrap}
+.hero{position:relative;overflow:hidden;padding:28px 30px;border-radius:28px;background:linear-gradient(115deg,#18334a 0%,#183b43 48%,#172b3b 100%);border:1px solid rgba(126,227,192,.18);box-shadow:0 18px 55px rgba(0,0,0,.2)}.hero:after{content:'';position:absolute;width:270px;height:270px;border:1px solid rgba(116,224,189,.1);border-radius:50%;right:-65px;top:-135px;box-shadow:0 0 0 28px rgba(116,224,189,.025),0 0 0 58px rgba(116,224,189,.02)}
+.hero-top{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:center;color:#c0d0d5;font-size:.83rem}.latest-label{display:flex;align-items:center;gap:8px}.spark{color:var(--gold);font-size:1rem}.updated{font-size:.75rem;color:#a8bec1}.hero-content{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:center;gap:20px;padding-top:22px}.result-number{font-size:clamp(5rem,15vw,8.5rem);font-weight:800;letter-spacing:-8px;line-height:.95;color:#f6fff9;text-shadow:0 8px 38px rgba(116,224,189,.15);font-variant-numeric:tabular-nums}.result-caption{margin-top:14px;color:#a9c2c2;font-size:.85rem}.result-date{color:#d8e6e2;font-weight:600}.latest-pill{border-radius:16px;background:rgba(5,19,29,.28);border:1px solid rgba(255,255,255,.12);padding:15px 18px;min-width:132px}.latest-pill .pill-label{font-size:.72rem;color:#a8c0c2}.latest-pill strong{display:block;color:var(--mint);font-size:1.12rem;margin-top:8px}
+.section-heading{display:flex;align-items:center;justify-content:space-between;margin:29px 2px 13px}.section-heading h2{font-size:1rem;font-weight:700}.section-heading span{color:var(--muted);font-size:.76rem}.sessions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.session{background:linear-gradient(145deg,rgba(23,36,58,.92),rgba(17,28,45,.92));border:1px solid var(--line);border-radius:var(--radius);padding:19px 20px}.session-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:15px;border-bottom:1px solid var(--line)}.session-time{display:flex;align-items:center;gap:9px;font-weight:700;font-size:.96rem}.time-icon{font-size:1.05rem}.session-type{font-size:.68rem;letter-spacing:.7px;font-weight:700;color:var(--gold);background:rgba(255,207,112,.1);padding:6px 9px;border-radius:999px}.session-data{display:grid;grid-template-columns:1fr 1fr auto;align-items:end;gap:12px;padding-top:16px}.data-label{font-size:.68rem;color:var(--muted);letter-spacing:.65px}.data-value{font-size:1rem;font-weight:600;margin-top:6px;font-variant-numeric:tabular-nums}.session-result{text-align:right}.session-result .data-label{color:var(--mint)}.session-result strong{display:block;font-size:2.1rem;line-height:1;margin-top:5px;color:var(--mint);font-variant-numeric:tabular-nums}
+.market-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.market-card{padding:18px 20px;border-radius:var(--radius);background:var(--surface);border:1px solid var(--line)}.market-time{font-size:.85rem;color:#d4deeb;font-weight:700;margin-bottom:15px}.market-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-top:1px solid rgba(255,255,255,.055)}.market-row span{color:var(--muted);font-size:.75rem}.market-row strong{font-size:1.12rem;font-variant-numeric:tabular-nums}.footnote{margin-top:24px;padding-top:15px;border-top:1px solid var(--line);font-size:.72rem;color:#73829a;line-height:1.7;text-align:center}
+@media(max-width:600px){body{padding:0 15px 28px}.topbar{height:72px}.brand-mark{width:38px;height:38px}.brand-name{font-size:.93rem}.market-state{font-size:.72rem;padding:8px 10px}main{padding-top:25px}.intro{align-items:flex-start;flex-direction:column;gap:12px}.date-chip{padding:8px 11px}.hero{padding:23px 20px;border-radius:23px}.hero-content{align-items:flex-end}.result-number{font-size:6.7rem;letter-spacing:-6px}.latest-pill{min-width:105px;padding:12px}.updated{font-size:.67rem}.sessions,.market-grid{gap:10px}.session{padding:15px 13px;border-radius:18px}.session-time{font-size:.85rem;gap:6px}.session-type{font-size:.58rem;padding:5px 7px}.session-data{gap:6px}.data-value{font-size:.82rem}.data-label{font-size:.61rem}.session-result strong{font-size:1.8rem}.market-card{padding:15px 14px;border-radius:18px}}
+@media(max-width:370px){.hero-content{align-items:flex-start;flex-direction:column}.result-number{font-size:6rem}.latest-pill{display:flex;align-items:center;justify-content:space-between;width:100%}.latest-pill strong{margin:0}.session-data{grid-template-columns:1fr 1fr}.session-result{grid-column:span 2;display:flex;align-items:center;justify-content:space-between;text-align:left;border-top:1px solid var(--line);padding-top:9px}.session-result strong{margin:0}}
 </style>
 </head>
 <body>
-<div class="header">
-  <h1>Myanmar 2D</h1>
-  <div class="status-badge">● CLOSED</div>
-</div>
-<div class="main-result">
-  <div class="main-number">90</div>
-  <div class="updated-time">✓ Updated 2026-11-05 04:30 PM</div>
-</div>
-<div class="session-card">
-  <div class="session-header">
-    <div class="session-time">☀️ 12:01 PM</div>
-    <div class="session-tag">MORNING</div>
-  </div>
-  <div class="session-body">
-    <div class="session-col"><div class="label">SET</div><div class="value">1,493.86</div></div>
-    <div class="session-col"><div class="label">VALUE</div><div class="value">49,875.74</div></div>
-    <div class="session-result"><div class="label">2D</div><div class="number">65</div></div>
-  </div>
-</div>
-<div class="session-card">
-  <div class="session-header">
-    <div class="session-time">🌙 4:30 PM</div>
-    <div class="session-tag">EVENING</div>
-  </div>
-  <div class="session-body">
-    <div class="session-col"><div class="label">SET</div><div class="value">1,497.99</div></div>
-    <div class="session-col"><div class="label">VALUE</div><div class="value">86,950.24</div></div>
-    <div class="session-result"><div class="label">2D</div><div class="number">90</div></div>
-  </div>
-</div>
-<div class="time-slots-row">
-  <div class="time-card">
-    <div class="time">9:30 AM</div>
-    <div class="time-row"><span class="label">MODERN</span><span class="value">31</span></div>
-    <div class="time-row"><span class="label">INTERNET</span><span class="value">36</span></div>
-  </div>
-  <div class="time-card">
-    <div class="time">2:00 PM</div>
-    <div class="time-row"><span class="label">MODERN</span><span class="value">29</span></div>
-    <div class="time-row"><span class="label">INTERNET</span><span class="value">39</span></div>
-  </div>
+<div class="shell">
+  <header class="topbar">
+    <div class="brand"><div class="brand-mark">2D</div><div><div class="brand-name">Myanmar 2D</div><div class="brand-sub">နေ့စဉ်ရလဒ်များ</div></div></div>
+    <div class="market-state"><span class="dot"></span>ဈေးပိတ်ပါပြီ</div>
+  </header>
+  <main>
+    <div class="intro"><div><div class="eyebrow">ရလဒ်အကျဉ်း</div><h1>ဒီနေ့ရဲ့ 2D ရလဒ်များ</h1></div><div class="date-chip">📅 &nbsp;၂၀၂၆ နိုဝင်ဘာ ၅</div></div>
+    <section class="hero" aria-label="နောက်ဆုံးရလဒ်">
+      <div class="hero-top"><div class="latest-label"><span class="spark">✦</span> နောက်ဆုံးထွက်ဂဏန်း</div><div class="updated">နောက်ဆုံးပြင်ဆင်ချိန် · ၄:၃၀ PM</div></div>
+      <div class="hero-content"><div><div class="result-number">90</div><div class="result-caption"><span class="result-date">ညနေပိုင်း</span> &nbsp;·&nbsp; ၄:၃၀ PM</div></div><div class="latest-pill"><div class="pill-label">ယနေ့အခြေအနေ</div><strong>ရလဒ်ထွက်ရှိပြီး</strong></div></div>
+    </section>
+    <div class="section-heading"><h2>ထွက်ဂဏန်းများ</h2><span>မနက်ပိုင်းနှင့် ညနေပိုင်း</span></div>
+    <section class="sessions" aria-label="ထွက်ဂဏန်းများ">
+      <article class="session"><div class="session-head"><div class="session-time"><span class="time-icon">☀️</span> ၁၂:၀၁ PM</div><span class="session-type">မနက်ပိုင်း</span></div><div class="session-data"><div><div class="data-label">SET</div><div class="data-value">1,493.86</div></div><div><div class="data-label">VALUE</div><div class="data-value">49,875.74</div></div><div class="session-result"><div class="data-label">2D</div><strong>65</strong></div></div></article>
+      <article class="session"><div class="session-head"><div class="session-time"><span class="time-icon">🌙</span> ၄:၃၀ PM</div><span class="session-type">ညနေပိုင်း</span></div><div class="session-data"><div><div class="data-label">SET</div><div class="data-value">1,497.99</div></div><div><div class="data-label">VALUE</div><div class="data-value">86,950.24</div></div><div class="session-result"><div class="data-label">2D</div><strong>90</strong></div></div></article>
+    </section>
+    <div class="section-heading"><h2>အချိန်ပိုင်းအချက်အလက်</h2><span>ယနေ့</span></div>
+    <section class="market-grid" aria-label="အချိန်ပိုင်းအချက်အလက်">
+      <article class="market-card"><div class="market-time">◷ &nbsp; ၉:၃၀ AM</div><div class="market-row"><span>MODERN</span><strong>31</strong></div><div class="market-row"><span>INTERNET</span><strong>36</strong></div></article>
+      <article class="market-card"><div class="market-time">◷ &nbsp; ၂:၀၀ PM</div><div class="market-row"><span>MODERN</span><strong>29</strong></div><div class="market-row"><span>INTERNET</span><strong>39</strong></div></article>
+    </section>
+    <footer class="footnote">ဖော်ပြထားသော အချက်အလက်များသည် ကြည့်ရှုရန်အတွက်သာ ဖြစ်ပါသည်။ တရားဝင်ထုတ်ပြန်ချက်နှင့် တိုက်ဆိုင်စစ်ဆေးပါ။</footer>
+  </main>
 </div>
 </body>
 </html>`;
